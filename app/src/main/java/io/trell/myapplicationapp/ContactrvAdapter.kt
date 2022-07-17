@@ -1,10 +1,12 @@
 package io.trell.myapplicationapp
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.contains
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.NetworkPolicy
@@ -33,6 +35,19 @@ class ContactRvAdapter(var contactList:List<contact>):
             .centerCrop()
             .into(holder.binding.imgcontact)
 
+        val context=holder.itemView.context
+        holder.binding.imgcontact.setOnClickListener {
+            Toast.makeText(context,"you have clicked on${currentcontact.name}'s the image",Toast.LENGTH_SHORT).show()
+        }
+        holder.binding.cvContact.setOnClickListener{
+            val intent=Intent(context,ViewContactActivity::class.java)
+            intent.putExtra("NAME",currentcontact.name)
+            intent.putExtra("EMAIL",currentcontact.email)
+            intent.putExtra("PHONENUMBER",currentcontact.phoneNumber)
+            intent.putExtra("ADDRESS",currentcontact.email)
+            intent.putExtra("IMAGE",currentcontact.image)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
